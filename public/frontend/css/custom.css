@@ -1,0 +1,30 @@
+body{font-family: Roboto,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,sans-serif!important;}
+.header-top-nav{padding: 5px 0 0 0}
+.home-electronic .header-navigation{background: #131921;}
+.home-9 .header-buttom-nav{background: #232f3e;}
+.home-6 .header-navigation{padding: 15px 0}
+.home-9 .main-navigation ul li a{color: #fff;font-weight: 400;}
+.home-electronic .dropdown_search form button{background: #e2bd09;}
+h3.vertical-menu-heading:before{color: #fff}
+h3.vertical-menu-heading{padding: 5px 20px;}
+.home-9 h3.vertical-menu-heading{color: #fff;background: #232f3e;height: 40px;}
+.beauty-category{height: 40px;}
+.home-5.home-6 .main-navigation ul li a{padding: 7px 15px 7px 0;}
+.home-5 .sticky-nav.menu_fixed {
+    padding: 3px 0px;
+}
+
+.slider-height-10{height: 400px;}
+.home-8 .static-area{margin-bottom: 20px; margin-top: 10px;}
+
+.category-list{margin-bottom: 10px!important;}
+.desc-listcategoreis{left: 15px !important;}
+
+.product-decs{padding:10px !important;}
+.clockdiv{margin: 5px;}
+
+.product-size .nice-select{width: inherit;}
+
+.sidebar-widget .sidebar-widget-list ul li{padding: 0px;}
+.rating-product i{color: inherit; font-size: 16px;}
+.rating-product .checked{color: #faca51 !important;}
