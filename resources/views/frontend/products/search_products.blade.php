@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', $category->name . ' | '. Config::get('siteSetting.site_name') )
+@section('title', Request::get('q') . ' | '. Config::get('siteSetting.site_name') )
 @section('css')
 <style type="text/css">
     .page-link{border-radius: 50px;margin-left: 5px !important;}
@@ -17,15 +17,10 @@
                     <div class="breadcrumb-content">
                         <ul class="breadcrumb-links">
                             <li><a href="{{url('/')}}">Home</a></li>
-                            @if(Request::route('catslug'))
-                            <li><a href="{{route('home.category', Request::route('catslug') )}}">{{ Request::route('catslug') }}</a></li>
+                            @if(Request::get('cat'))
+                            <li><a href="{{route('home.category', Request::get('cat') )}}">{{ Request::get('cat') }}</a></li>
                             @endif
-                            @if(Request::route('subslug'))
-                            <li><a href="{{route('home.category', [Request::route('catslug'), Request::route('subslug')] )}}">{{ Request::route('subslug')}}</a></li>
-                            @endif
-                            @if(Request::route('childslug'))
-                            <li>{{Request::route('childslug')}}</li>
-                            @endif
+                            <li>Search Results: {{Request::get('q')}}</li>
                            
                         </ul>
                     </div>
@@ -54,11 +49,8 @@
                                 <h4 class="pro-sidebar-title">Related Categories</h4>
                                 <div class="sidebar-widget-list">
                                     <ul>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <a style="font-weight: bold;" href="#">{{$category->name}}</a>
-                                            </div>
-                                        </li>
+                                        
+                                        @if($filterCategories)
                                         @foreach($filterCategories as $filterCategory )
                                         <li>
                                             <div class="sidebar-widget-list-left">
@@ -67,6 +59,7 @@
                                             </div>
                                         </li>
                                         @endforeach
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -161,7 +154,7 @@
             to: 1000,
             step: 1,
             format: '$%s',
-            width: 200,
+            width: 190,
             showLabels: true,
             showScale: false,
             isRange : true,
@@ -173,17 +166,16 @@
     function filter_data(page)
     {
        
-        var category = "{{ Request::route('catslug') }}" ;
-        var subcategory = "{{ (Request::route('subslug')) ? '/'.Request::route('subslug') : '' }}";
-        var childcategory = "{{ (Request::route('childslug')) ? '/'.Request::route('childslug') : '' }}";
-
-        var concatUrl = '?';
-
+        
+        var concatUrl = '';
+        var category = "{{ (Request::get('cat')) ? 'cat='.Request::get('cat') : '' }}";
         
         var searchKey = $("#searchKey").val();
         if(searchKey != '' ){
-            concatUrl += 'q='+searchKey;
+            concatUrl += '&q='+searchKey;
         }
+
+
         @foreach($specifications as $specification)
             var filterValue = get_filter('{{$specification->name}}');
             if(filterValue != ''){
@@ -202,8 +194,9 @@
             concatUrl += '&ratting='+ratting;
         }
 
+        
         var sortby = $("#sortby :selected").val();
-        if(sortby != '' ){
+        if(sortby != '' && sortby != null){
             concatUrl += '&sortby='+sortby;
         }
 
@@ -218,8 +211,8 @@
         $('#filter_product').html('<div class="loadingData"></div>');
         
 
-        var  link = '<?php echo URL::to("category");?>/'+category+subcategory+childcategory+concatUrl;
-            history.pushState({id: 'category'}, category +' '+subcategory, link);
+        var  link = '{{route("product.search")}}?'+category+concatUrl;
+            history.pushState({id: 'category'}, category, link);
 
         $.ajax({
             url:link,

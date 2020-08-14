@@ -221,8 +221,7 @@
 
     }
 
-
-     function confirmPopup(id) {
+    function confirmPopup(id) {
 
           document.getElementById('itemID').value = id;
      }

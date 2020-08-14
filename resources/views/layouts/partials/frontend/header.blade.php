@@ -77,12 +77,12 @@
                         <div class="header_account_list search_list">
                             <a href="javascript:void(0)"><i class="ion-ios-search-strong"></i></a>
                             <div class="dropdown_search">
-                                <form action="{{ route('home.category') }}">
-                                    <input id="searchKey" required placeholder="Search entire store here ..." type="text" />
+                                <form action="{{ route('product.search') }}" method="get">
+                                    <input onkeyup="searchItem(this.value)" name="q" value="@if(Request::get('q')){{Request::get('q')}}@endif" id="searchKey" required placeholder="Search entire store here ..." type="text" />
                                     <div class="search-category">
                                         <?php $categories =  \App\Models\Category::where('parent_id', '=', null)->where('status', 1)->get() ?>
-                                        <select style="border: none;display: none;" class="bootstrap-select" name="poscats">
-                                            <option value="0">All categories</option>
+                                        <select  style="border: none;display: none;" class="bootstrap-select" name="cat">
+                                            <option value="">All categories</option>
                                             @foreach($categories as $srccategory)
                                             <option value="{{$srccategory->slug}}">{{$srccategory->name}}</option>
                                             @endforeach
@@ -107,13 +107,13 @@
                                 
                                 <a href="{{ route('wishlist') }}" class="count-cart heart"><span class="cartCount" id="wishlist">4</span></a>
                                 <?php 
-                                $getCart = $sessionCart = 0;
+                                $sessionCart = 0;
                                 if(Session::get('cart')){ $sessionCart = count(Session::get('cart')); }
-                                if(Auth::check()){ $getCart = App\Models\Cart::where('user_id', Auth::id())->count(); } 
+                                
                                 ?>
                                 
                                 <div class="mini-cart-warp">
-                                    <a onclick="getCart()" href="#" class="count-cart"><span class="cartCount" id="cartCount">{{$sessionCart+$getCart}}</span></a>
+                                    <a onclick="getCart()" href="#" class="count-cart"><span class="cartCount" id="cartCount">{{$sessionCart}}</span></a>
                                     <!-- //show cart content -->
                                     <div id="getCartHead" class="mini-cart-content"><div class="loadingData-sm"></div></div>
                                 </div>
@@ -341,7 +341,7 @@
                             <a href="{{ route('wishlist') }}" class="count-cart random d-xs-none"></a>
                             <a href="{{ route('wishlist') }}" class="count-cart heart d-xs-none"></a>
                             <div class="mini-cart-warp">
-                                <a onclick="getCart()" href="#" class="count-cart"><span class="cartCount" id="cartCount">{{$sessionCart+$getCart}}</span></a>
+                                <a onclick="getCart()" href="#" class="count-cart"><span class="cartCount" id="cartCount">{{$sessionCart}}</span></a>
                                 <div id="getCartHeadMobile" class="mini-cart-content"></div>
                             </div>
                         </div>

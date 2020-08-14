@@ -13,9 +13,13 @@ h3.vertical-menu-heading{padding: 5px 20px;}
 .home-5 .sticky-nav.menu_fixed {
     padding: 3px 0px;
 }
-
+.ajaxError{font-size: 14px; color: red;}
 .slider-height-10{height: 400px;}
 .home-8 .static-area{margin-bottom: 20px; margin-top: 10px;}
+
+.shopping-cart-img { margin: 0 10px 0 0; width: 50px;}
+.single-shopping-cart{padding: 10px 0;}
+.mini-cart-content{padding: 0 3px 10px 10px;}
 
 .category-list{margin-bottom: 10px!important;}
 .desc-listcategoreis{left: 15px !important;}

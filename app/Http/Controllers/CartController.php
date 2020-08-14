@@ -25,45 +25,25 @@ class CartController extends Controller
                 $price = $product->selling_price;
             }
 
-            if (Auth::check()) {
-                $user_id = Auth::id();
-                $getCart = Cart::where('product_id', $request->product_id)->where('user_id', $user_id)->first();
-                if($getCart){
-                    $getCart->increment('qty');
-                }else {
-                    $cart = new Cart();
-                    $cart->product_id = $request->product_id;
-                    $cart->title = $product->title;
-                    $cart->image = $product->feature_image;
-                    $cart->qty = (isset($request->qty)) ? $request->qty : 1;
-                    $cart->price = $price;
-                    $cart->user_id = $user_id;
-                    $cart->save();
-                }
-
+            //check weather cart array have product or empty
+            $cart = Session::has('cart') ? Session::get('cart') : [];
+            //check product id already exists
+            if (array_key_exists($product->id, $cart)) {
+                $cart[$product->id]['qty']++;
             } else {
-                //check weather cart array have product or empty
-                $cart = Session::has('cart') ? Session::get('cart') : [];
-                //check product id already exists
-                if (array_key_exists($product->id, $cart)) {
-                    $cart[$product->id]['qty']++;
-                } else {
-                    $cart[$product->id] = [
-                        'product_id' => $request->product_id,
-                        'title' => $product->title,
-                        'slug' => $product->slug,
-                        'image' => $product->feature_image,
-                        'qty' => (isset($request->qty)) ? $request->qty : 1,
-                        'price' => $price,
-                    ];
-                }
-                session(['cart' => $cart]);
-
+                $cart[$product->id] = [
+                    'product_id' => $request->product_id,
+                    'title' => $product->title,
+                    'slug' => $product->slug,
+                    'image' => $product->feature_image,
+                    'qty' => (isset($request->qty)) ? $request->qty : 1,
+                    'price' => $price,
+                ];
             }
+            session(['cart' => $cart]);
 
             $output = array(
                 'status' => 'success',
-
                 'msg' => Config::get('siteSetting.cart_success')
             );
 

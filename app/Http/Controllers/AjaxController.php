@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,24 +85,27 @@ class AjaxController extends Controller
     	echo $output;
 
     }
-
+    //get cart details in header
     public function getCartHead()
     {
-        $user_id = Auth::id();
-        $getCart = '';
         $sessionCart =  Session::get('cart');
-        $user_id = null;
-        if(Auth::check()){
-            $getCart = Cart::where('user_id', $user_id)->get();
-        }
-
-        if($getCart || $sessionCart){
-            echo view('frontend.carts.cart-head')->with(compact('getCart', 'sessionCart'));
+        if($sessionCart){
+            echo view('frontend.carts.cart-head')->with(compact('sessionCart'));
         }else{
             echo '<h4 style="color:red;text-align: center;padding: 0px">Your cart is empty.</h4>';
         }
-
     }
+
+    //suggest search keywords
+    public function search_keyword(Request $request){
+        $get_keyord = Product::select('title')->where('title', 'LIKE', '%'. $request->q .'%')->get();
+        $tags = array();
+        foreach ($get_keyord as $value) {
+            array_push($tags, $value->title);
+        }
+        echo json_encode($tags);
+    }
+
 
 
 }

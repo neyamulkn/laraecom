@@ -35,8 +35,6 @@ class ProductController extends Controller
     //store new product
     public function store(Request $request)
     {
-
-
         $request->validate([
             'title' => 'required',
             'description' => 'required',

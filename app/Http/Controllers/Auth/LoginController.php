@@ -56,7 +56,7 @@ class LoginController extends Controller
 
         if(auth()->attempt(array($fieldType => $input['usernameOrEmail'], 'password' => $input['password'])))
         {
-            return redirect()->route('admin.dashboard');
+            return redirect()->intended(route('admin.dashboard'));
         }else{
             Toastr::error( $fieldType. ' or password is invalid.');
             return back()->withInput();

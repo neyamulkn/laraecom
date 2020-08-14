@@ -1,6 +1,13 @@
 @extends('layouts.frontend')
 @section('title', 'Cart Item')
-
+@section('css')
+    <style type="text/css">
+        .cart-table-content table thead>tr th{padding: 8px;}
+        .cart-table-content table tbody>tr td{padding: 10px 5px;}
+        .cart-table-content table tbody>tr td.product-quantity{width: inherit;}
+       
+    </style>
+@endsection
 @section('content')
     <section class="breadcrumb">
         <div class="container">
@@ -20,73 +27,55 @@
     <div class="cart-main-area mtb-60px">
         <div class="container">
             <h3 class="cart-page-title">Your cart items</h3>
+
+    
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                
+                <div class="col-lg-8 col-md-8 col-sm-12 col-12">
                     <form action="#">
                         <div class="table-content table-responsive cart-table-content">
+
+                       
                             <table>
                                 <thead>
                                     <tr>
                                         <th>Image</th>
-                                        <th>Product Name</th>
-                                        <th>Until Price</th>
+                                        <th>Title</th>
+                                        <th>Price</th>
                                         <th>Qty</th>
                                         <th>Subtotal</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                    @if(Session::get('cart'))
+                                    @foreach(Session::get('cart') as $item)
                                     <tr>
-                                        <td class="product-thumbnail">
-                                            <a href="#"><img src="assets/images/product-image/mini-cart/1.jpg" alt="" /></a>
+                                        <td >
+
+                                            <a href="#"><img src="{{asset('frontend')}}/images/product-image/mini-cart/1.jpg" alt="" /></a>
+
+                                            
+
+
                                         </td>
-                                        <td class="product-name"><a href="#">Product Name</a></td>
-                                        <td class="product-price-cart"><span class="amount">$60.00</span></td>
+                                        <td style="text-align: left;"><a href="#">Huawei Mediapad T3 8inch Tablet 2 GB RAM/16GB ROM</a>
+                                        </td>
+                                        <td ><span class="amount">$60.00</span></td>
                                         <td class="product-quantity">
                                             <div class="cart-plus-minus">
                                                 <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
                                             </div>
                                         </td>
-                                        <td class="product-subtotal">$70.00</td>
+                                        <td >$70.00</td>
                                         <td class="product-remove">
-                                            <a href="#"><i class="fa fa-pencil-alt"></i></a>
+                                            
                                             <a href="#"><i class="fa fa-times"></i></a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="product-thumbnail">
-                                            <a href="#"><img src="assets/images/product-image/mini-cart/2.jpg" alt="" /></a>
-                                        </td>
-                                        <td class="product-name"><a href="#">Product Name</a></td>
-                                        <td class="product-price-cart"><span class="amount">$50.00</span></td>
-                                        <td class="product-quantity">
-                                            <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">$80.00</td>
-                                        <td class="product-remove">
-                                            <a href="#"><i class="fa fa-pencil-alt"></i></a>
-                                            <a href="#"><i class="fa fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-thumbnail">
-                                            <a href="#"><img src="assets/images/product-image/mini-cart/3.jpg" alt="" /></a>
-                                        </td>
-                                        <td class="product-name"><a href="#">Product Name</a></td>
-                                        <td class="product-price-cart"><span class="amount">$70.00</span></td>
-                                        <td class="product-quantity">
-                                            <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">$90.00</td>
-                                        <td class="product-remove">
-                                            <a href="#"><i class="fa fa-pencil-alt"></i></a>
-                                            <a href="#"><i class="fa fa-times"></i></a>
-                                        </td>
-                                    </tr>
+                                    @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -181,8 +170,117 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-4 col-lg-4">
+                    <div class="your-order-area">
+                       
+                        <div class="your-order-wrap gray-bg-4">
+                            <div class="your-order-product-info">
+                                <div class="your-order-top">
+                                    <ul>
+                                        <li>Product</li>
+                                        <li>Total</li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-middle">
+                                    <ul>
+                                        <li><span class="order-middle-left">Product Name X 1</span> <span class="order-price">$329 </span></li>
+                                        <li><span class="order-middle-left">Product Name X 1</span> <span class="order-price">$329 </span></li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-bottom">
+                                    <ul>
+                                        <li class="your-order-shipping">Shipping</li>
+                                        <li>Free shipping</li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-total">
+                                    <ul>
+                                        <li class="order-total">Total</li>
+                                        <li>$329</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="payment-method">
+                                <div class="payment-accordion element-mrg">
+                                    <div class="panel-group" id="accordion">
+                                        <div class="panel payment-accordion">
+                                            <div class="panel-heading" id="method-one">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#method1">
+                                                        Direct bank transfer
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="method1" class="panel-collapse collapse show">
+                                                <div class="panel-body">
+                                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel payment-accordion">
+                                            <div class="panel-heading" id="method-two">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#method2">
+                                                        Check payments
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="method2" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel payment-accordion">
+                                            <div class="panel-heading" id="method-three">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#method3">
+                                                        Cash on delivery
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="method3" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Place-order mt-25">
+                            <a class="btn-hover" href="#">Place Order</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!-- cart area end -->
+@endsection
+
+@section('js')
+    
+    <script type="text/javascript">
+        var image = "{{asset('frontend')}}/images/product-image/mini-cart/1.jpg";
+        var watermark = "{{asset('frontend')}}/images/product-image/mini-cart/2.jpg";
+        $.ajax({
+            url:"{{route('product.water')}}",
+            method:"get",
+            data:{
+                watermark:watermark,image:image
+            },
+            success:function(data){
+                if(data){
+                    $('.watermark').html(data);
+               }else{
+                    $('.watermark').html('Not Found');
+               }
+            },
+            
+        });
+    </script>
+
 @endsection

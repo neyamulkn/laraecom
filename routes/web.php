@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('category/{catslug?}/{subslug?}/{childslug?}', 'HomeController@category')->name('home.category');
+//search products
+Route::get('src', 'HomeController@search')->name('product.search');
+Route::get('water', 'HomeController@water')->name('product.water');
+
 Route::get('apicategory/{catslug?}/{subslug?}/{childslug?}', 'HomeController@apicategory')->name('home.apicategory');
 
 Route::post('cart/add', 'CartController@cartAdd')->name('cart.add');
