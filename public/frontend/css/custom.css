@@ -13,6 +13,9 @@ h3.vertical-menu-heading{padding: 5px 20px;}
 .home-5 .sticky-nav.menu_fixed {
     padding: 3px 0px;
 }
+
+.cartCount{ color: #fff; font-size: 13px; position: absolute;  right: auto; left: 15px;background: #f36e36;top: 9px;width: 18px;height: 18px;line-height: 19px;text-align: center;border-radius: 50%;}
+
 .ajaxError{font-size: 14px; color: red;}
 .slider-height-10{height: 400px;}
 .home-8 .static-area{margin-bottom: 20px; margin-top: 10px;}

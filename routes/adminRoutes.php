@@ -132,13 +132,20 @@ Route::group(['middleware' => ['auth', 'admin']], function(){
 	Route::get('banner/{id}/edit', 'BannerController@edit')->name('banner.edit');
 	Route::post('banner/update', 'BannerController@update')->name('banner.update');
 	Route::get('banner/delete/{id}', 'BannerController@delete')->name('banner.delete');
-		
+	
 	// service routes
 	Route::post('service/store', 'ServicesController@store')->name('service.store');
 	Route::get('service/list', 'ServicesController@index')->name('service.list');
 	Route::get('service/{id}/edit', 'ServicesController@edit')->name('service.edit');
 	Route::post('service/update', 'ServicesController@update')->name('service.update');
 	Route::get('service/delete/{id}', 'ServicesController@delete')->name('service.delete');
+
+	// coupon routes
+	Route::get('coupon', 'CouponController@index')->name('coupon');
+	Route::post('coupon/store', 'CouponController@store')->name('coupon.store');
+	Route::get('coupon/{id}/edit', 'CouponController@edit')->name('coupon.edit');
+	Route::post('coupon/update', 'CouponController@update')->name('coupon.update');
+	Route::get('coupon/delete/{id}', 'CouponController@delete')->name('coupon.delete');
 
 
 

@@ -127,3 +127,5 @@
     </div>
     <!--  Footer Bottom Area End-->
 </footer>
+<!--  Delete Modal -->
+@include('modal.cartItemRemove')

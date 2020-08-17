@@ -8,11 +8,14 @@
     {!! Toastr::message() !!}
     <script>
         @if($errors->any())
-        
-            // if occur error open model
-            $("#{{Session::get('submitType')}}").modal('show');
-            @if(Session::get('submitType')=='edit')
-                edit({{old('id')}});
+            
+            @if(Session::get('submitType'))
+                // if occur error open model
+                $("#{{Session::get('submitType')}}").modal('show');
+                //open edit modal by id
+                @if(Session::get('submitType')=='edit')
+                    edit({{old('id')}});
+                @endif
             @endif
 
             @foreach($errors->all() as $error)

@@ -260,17 +260,17 @@ a.morelink {
                             <!-- <p class="reference">Reference:<span> demo_17</span></p> -->
                            
                         </div>
-                         <p>Brand: {{$product->get_brand->name}} | More </p>
+                         @if($product->get_brand)<p>Brand: {{$product->get_brand->name}} | @endif More </p>
                          <p class="availability in-stock pull-right">Availability: <span>In Stock</span></p>
                         <div class="pricing-meta">
                             <ul>
                                 @if($product->discount)
-                                <li class="current-price" style="font-size: 30px;margin-bottom: 0px">{{$siteSetting['currency_symble']}}{{$product->selling_price-($product->discount*$product->selling_price)/100 }}</li><br>
-                                <li class="old-price" style="margin:0px;font-size: 20px; "> {{$siteSetting['currency_symble']}}{{$product->selling_price}}</li>
+                                <li class="current-price" style="font-size: 30px;margin-bottom: 0px">{{Config::get('currency_symble')}}{{$product->selling_price-($product->discount*$product->selling_price)/100 }}</li><br>
+                                <li class="old-price" style="margin:0px;font-size: 20px; "> {{Config::get('currency_symble')}}{{$product->selling_price}}</li>
                                 
                                 <li>-{{$product->discount}}%</li>
                                 @else
-                                <li class="old-price not-cut">{{$siteSetting['currency_symble']}}{{$product->selling_price}}</li>
+                                <li class="old-price not-cut">{{Config::get('currency_symble')}}{{$product->selling_price}}</li>
                                 @endif
                             </ul>
                         </div>

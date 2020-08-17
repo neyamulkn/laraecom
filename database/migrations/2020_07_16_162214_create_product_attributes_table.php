@@ -19,7 +19,7 @@ class CreateProductAttributesTable extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->char('name', 50);
             $table->char('slug', 30);
-            $table->integer('display_type')->default('1')->comment('1=flat, 2=select, 3=radio, 4=checkbox');
+            $table->integer('display_type')->nullable()->comment('1=flat, 2=select, 3=radio, 4=checkbox');
             $table->tinyInteger('qty')->nullable();
             $table->tinyInteger('price')->nullable();
             $table->tinyInteger('color')->nullable();

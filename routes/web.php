@@ -24,7 +24,13 @@ Route::get('apicategory/{catslug?}/{subslug?}/{childslug?}', 'HomeController@api
 
 Route::post('cart/add', 'CartController@cartAdd')->name('cart.add');
 Route::get('cart/view', 'CartController@cartView')->name('cart.view');
+Route::get('cart/update', 'CartController@cartUpdate')->name('cart.update');
+Route::get('cart/item/remove/{id}', 'CartController@itemRemove')->name('cart.itemRemove');
+Route::get('cart/remove/allitem', 'CartController@clearCart')->name('cart.clear');
 Route::post('cart/view/header', 'AjaxController@getCartHead')->name('getCartHead');
+
+//apply coupon
+Route::get('coupon/apply', 'HomeController@couponApply')->name('coupon.apply');
 
 Route::get('product/{slug?}', 'HomeController@product_details')->name('product_details');
 Route::get('cart', 'HomeController@cart')->name('cart');

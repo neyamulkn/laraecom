@@ -1,19 +1,3 @@
-<style type="text/css">
-    .cartCount{
-    color: #fff;
-    font-size: 13px;
-    position: absolute;
-    right: auto;
-    left: 15px;
-    background: #f36e36;
-    top: 9px;
-    width: 18px;
-    height: 18px;
-    line-height: 19px;
-    text-align: center;
-    border-radius: 50%;
-}
-</style>
 <header class="main-header">
     <!-- Header Top Start -->
     <div class="header-top-nav ">
@@ -158,7 +142,7 @@
                                             </ul>
                                         </li>
                                     @else
-                                        <li class="{{($catHidden>$totalCat ? 'hidden' : '')}}"><a href="{{ route('home.category') }}">{{$category->name}}</a></li>
+                                        <li class="{{($catHidden>$totalCat ? 'hidden' : '')}}"><a href="{{ route('home.category', [$category->slug]) }}">{{$category->name}}</a></li>
                                     @endif
                                     <?php $catHidden++; ?>
                                     
@@ -381,88 +365,35 @@
                 <!-- Category Toggle -->
                 <button class="category-toggle"><i class="fa fa-bars"></i> All Categories</button>
             </div>
-
+             @if(count($categories)>0)
             <!-- Category Menu -->
             <nav class="category-menu">
                 <ul>
-                    <li class="menu-item-has-children menu-item-has-children-1">
-                        <a href="{{ route('home.category') }}">Accessories & Parts<i class="ion-ios-arrow-down"></i></a>
+                <?php $catHidden = 1; $totalCat = 10 ?>
+                @foreach($categories as $category)
+                    @if(count($category->get_subcategory)>0)
+                       
+                    <li class="menu-item-has-children menu-item-has-children-1 {{($catHidden>$totalCat ? 'hidden' : '')}}">
+                        <a>{{$category->name}}<i class="ion-ios-arrow-down"></i></a>
                         <!-- category submenu -->
                         <ul class="category-mega-menu category-mega-menu-1">
-                            <li><a href="{{ route('home.category') }}">Cables & Adapters</a></li>
-                            <li><a href="{{ route('home.category') }}">Batteries</a></li>
-                            <li><a href="{{ route('home.category') }}">Chargers</a></li>
-                            <li><a href="{{ route('home.category') }}">Bags & Cases</a></li>
-                            <li><a href="{{ route('home.category') }}">Electronic Cigarettes</a></li>
+                        @foreach($category->get_subcategory as $subcategory)
+                            <li><a href="{{ route('home.category', [$category->slug, $subcategory->slug]) }}">{{$subcategory->name}}</a></li>
+                        @endforeach
                         </ul>
                     </li>
-                    <li class="menu-item-has-children menu-item-has-children-2">
-                        <a href="{{ route('home.category') }}">Camera & Photo<i class="ion-ios-arrow-down"></i></a>
-                        <!-- category submenu -->
-                        <ul class="category-mega-menu category-mega-menu-2">
-                            <li><a href="{{ route('home.category') }}">Digital Cameras</a></li>
-                            <li><a href="{{ route('home.category') }}">Camcorders</a></li>
-                            <li><a href="{{ route('home.category') }}">Camera Drones</a></li>
-                            <li><a href="{{ route('home.category') }}">Action Cameras</a></li>
-                            <li><a href="{{ route('home.category') }}">Photo Studio Supplies</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children menu-item-has-children-3">
-                        <a href="{{ route('home.category') }}">Smart Electronics <i class="ion-ios-arrow-down"></i></a>
-                        <!-- category submenu -->
-                        <ul class="category-mega-menu category-mega-menu-3">
-                            <li><a href="{{ route('home.category') }}">Wearable Devices</a></li>
-                            <li><a href="{{ route('home.category') }}">Smart Home Appliances</a></li>
-                            <li><a href="{{ route('home.category') }}">Smart Remote Controls</a></li>
-                            <li><a href="{{ route('home.category') }}">Smart Watches</a></li>
-                            <li><a href="{{ route('home.category') }}">Smart Wristbands</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children menu-item-has-children-4">
-                        <a href="{{ route('home.category') }}">Audio & Video <i class="ion-ios-arrow-down"></i></a>
-                        <!-- category submenu -->
-                        <ul class="category-mega-menu category-mega-menu-4">
-                            <li><a href="{{ route('home.category') }}">Televisions</a></li>
-                            <li><a href="{{ route('home.category') }}">TV Receivers</a></li>
-                            <li><a href="{{ route('home.category') }}">Projectors</a></li>
-                            <li><a href="{{ route('home.category') }}">Audio Amplifier Boards</a></li>
-                            <li><a href="{{ route('home.category') }}">TV Sticks</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children menu-item-has-children-5">
-                        <a href="{{ route('home.category') }}">Portable Audio & Video <i class="ion-ios-arrow-down"></i></a>
-                        <!-- category submenu -->
-                        <ul class="category-mega-menu category-mega-menu-5">
-                            <li><a href="{{ route('home.category') }}">Headphones</a></li>
-                            <li><a href="{{ route('home.category') }}">Speakers</a></li>
-                            <li><a href="{{ route('home.category') }}">MP3 Players</a></li>
-                            <li><a href="{{ route('home.category') }}">VR/AR Devices</a></li>
-                            <li><a href="{{ route('home.category') }}">Microphones</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children menu-item-has-children-6">
-                        <a href="{{ route('home.category') }}">Video Game <i class="ion-ios-arrow-down"></i></a>
-                        <!-- category submenu -->
-                        <ul class="category-mega-menu category-mega-menu-6">
-                            <li><a href="{{ route('home.category') }}">Handheld Game Players</a></li>
-                            <li><a href="{{ route('home.category') }}">Game Controllers</a></li>
-                            <li><a href="{{ route('home.category') }}">Joysticks</a></li>
-                            <li><a href="{{ route('home.category') }}">Stickers</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="{{ route('home.category') }}">Televisions</a></li>
-                    <li><a href="{{ route('home.category') }}">Digital Cameras</a></li>
-                    <li><a href="{{ route('home.category') }}">Headphones</a></li>
-                    <li><a href="{{ route('home.category') }}">Wearable Devices</a></li>
-                    <li><a href="{{ route('home.category') }}">Smart Watches</a></li>
-                    <li><a href="{{ route('home.category') }}">Game Controllers</a></li>
-                    <li><a href="{{ route('home.category') }}"> Smart Home Appliances</a></li>
-                    <li class="hidden"><a href="{{ route('home.category') }}">Projectors</a></li>
+                    @else
+                    <li class="{{($catHidden>$totalCat ? 'hidden' : '')}}"><a href="{{ route('home.category', $category->slug) }}">{{$category->name}}</a></li>
+                    @endif
+                    <?php $catHidden++; ?>
+                @endforeach
+                    
                     <li>
-                        <a href="{{ route('home.category') }}" id="more-btn"><i class="ion-ios-plus-empty" aria-hidden="true"></i> More Categories</a>
+                        <a href="#" id="more-btn"><i class="ion-ios-plus-empty" aria-hidden="true"></i> More Categories</a>
                     </li>
                 </ul>
             </nav>
+             @endif
         </div>
 
         <!--=======  End of category menu =======-->

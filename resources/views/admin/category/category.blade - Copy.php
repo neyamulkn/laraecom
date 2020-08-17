@@ -68,8 +68,7 @@
                                                 <td>@{{row.name}}</td>
                                                 <td><img :src="assets+row.image" width="50"></td>
                                                 <td>@{{row.notes}}</td>
-                                                <td>@{{row.status}}
-                                                </td>
+                                                <td>@{{row.status}} </td>
                                                 <td>
                                                     <button type="button" @click="edit(row)"  data-toggle="modal" data-target="#edit" class="btn btn-info btn-sm"><i class="ti-pencil" aria-hidden="true"></i> Edit</button>
                                                     <button data-target="#delete" onclick="confirmPopup()" class="btn btn-danger btn-sm" data-toggle="modal"><i class="ti-trash" aria-hidden="true"></i> Delete</button>

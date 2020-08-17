@@ -21,7 +21,7 @@
                             <li><a href="{{route('home.category', Request::get('cat') )}}">{{ Request::get('cat') }}</a></li>
                             @endif
                             <li>Search Results: {{Request::get('q')}}</li>
-                           
+
                         </ul>
                     </div>
                 </div>
@@ -30,9 +30,9 @@
     </section>
     <!-- Shop Category Area End -->
     <div class="shop-category-area">
-        
+
         <div class="container">
-            
+
             <div class="row">
                 <div id="filter_product" class="col-lg-10 order-lg-last col-md-12 order-md-first" >
                     @include('frontend.products.filter_products')
@@ -43,29 +43,49 @@
                         <div class="sidebar-heading">
                             <div class="main-heading">
                                 <h2>Filter By</h2>
-                            </div>
+                            </div>)
                             <!-- Sidebar single item -->
                             <div class="sidebar-widget">
                                 <h4 class="pro-sidebar-title">Related Categories</h4>
                                 <div class="sidebar-widget-list">
                                     <ul>
-                                        
-                                        @if($filterCategories)
+
+                                    @if($filterCategories)
                                         @foreach($filterCategories as $filterCategory )
+
+                                        <?php
+                                        $category = $subcategory = $childcategory = '';
+                                        if($filterCategory->parent_id == null && $filterCategory->subcategory_id == null){
+                                            $category = $filterCategory->slug;
+
+                                        }
+                                        if($filterCategory->parent_id != null && $filterCategory->subcategory_id == null){
+                                            $category = $filterCategory->get_category->slug;
+                                            $subcategory = $filterCategory->slug;
+
+                                        }
+
+                                        if($filterCategory->parent_id != null && $filterCategory->subcategory_id != null){
+                                            $category = $filterCategory->get_singleSubcategory->get_category->slug;
+                                            $subcategory = $filterCategory->get_singleSubcategory->slug;
+                                            $childcategory = $filterCategory->slug;
+
+                                        }
+
+                                        ?>
                                         <li>
                                             <div class="sidebar-widget-list-left">
-                                                <a href="#">{{$filterCategory->name}}</a>
-                                                
+                                                <a href="{{route('home.category', [$category, $subcategory, $childcategory])}}">{{$filterCategory->name}}</a>
                                             </div>
                                         </li>
                                         @endforeach
-                                        @endif
+                                    @endif
                                     </ul>
                                 </div>
                             </div>
                             <!-- Sidebar single item -->
                         </div>
-                        
+
                         @if(count($brands)>0)
                         <div class="sidebar-widget mt-20">
                             <h4 class="pro-sidebar-title">Brands</h4>
@@ -75,7 +95,7 @@
                                     <li>
                                         <div class="">
                                             <input @if(in_array($brand->id , explode(',', Request::get('brand')))) checked @endif class="common_selector brand" value="{{$brand->id}}" id="brand{{$brand->id}}" type="checkbox" />
-                                            <label for="brand{{$brand->id}}" >{{ $brand->name }}</label> 
+                                            <label for="brand{{$brand->id}}" >{{ $brand->name }}</label>
                                         </div>
                                     </li>
                                     @endforeach
@@ -86,10 +106,10 @@
                         <!-- Sidebar single item -->
                         <div class="sidebar-widget mt-20">
                             <h4 class="pro-sidebar-title">Price</h4>
-                            
+
                             <input  type="hidden" id="price-range"  class="price-range-slider tertiary" value="@if(Request::get('price')) {{Request::get('price')}} @else 1000 @endif" form="shop_search_form"><br/>
                             <button id="+'&price='+price" class="btn btn-info btn-sm common_selector">Update your Search</button>
-               
+
                         </div>
                         <!-- Sidebar single item -->
                         @foreach($specifications as $specification)
@@ -103,7 +123,7 @@
                                     <li>
                                         <div class="">
                                             <input @if(in_array($attrValue->id , explode(',', Request::get(strtolower($specification->name)))) ) checked @endif value="{{$attrValue->id}}" class=" {{$specification->name}} common_selector" id="attr{{$attrValue->id}}" type="checkbox" />
-                                            <label for="attr{{$attrValue->id}}" >{{ $attrValue->name }}</label> 
+                                            <label for="attr{{$attrValue->id}}" >{{ $attrValue->name }}</label>
                                         </div>
                                     </li>
                                     @endforeach
@@ -151,7 +171,7 @@
         -----------*/
         $('.price-range-slider').jRange({
             from: 0,
-            to: 1000,
+            to: {{ ( count($products)>0) ? intval(max(array_column($products->toArray()['data'], 'selling_price'))) : 1000}},
             step: 1,
             format: '$%s',
             width: 190,
@@ -161,15 +181,15 @@
             theme: "theme-edragon"
         });
     })(jQuery);
-    
+
 
     function filter_data(page)
     {
-       
-        
+
+
         var concatUrl = '';
         var category = "{{ (Request::get('cat')) ? 'cat='.Request::get('cat') : '' }}";
-        
+
         var searchKey = $("#searchKey").val();
         if(searchKey != '' ){
             concatUrl += '&q='+searchKey;
@@ -181,20 +201,20 @@
             if(filterValue != ''){
                 concatUrl += '&{{strtolower($specification->name)}}='+filterValue;
             }
-            
+
         @endforeach
-       
+
         var brand = get_filter('brand');
         if(brand != '' ){
             concatUrl += '&brand='+brand;
-        }        
+        }
 
         var ratting = get_filter('ratting');
         if(ratting != '' ){
             concatUrl += '&ratting='+ratting;
         }
 
-        
+
         var sortby = $("#sortby :selected").val();
         if(sortby != '' && sortby != null){
             concatUrl += '&sortby='+sortby;
@@ -204,12 +224,12 @@
         if(price != '' ){
             concatUrl += '&price='+price;
         }
-       
+
         if(page != null){concatUrl += '&page='+page;}
-       
+
          //enable loader
         $('#filter_product').html('<div class="loadingData"></div>');
-        
+
 
         var  link = '{{route("product.search")}}?'+category+concatUrl;
             history.pushState({id: 'category'}, category, link);
@@ -240,7 +260,7 @@
         $('.'+class_name+':checked').each(function(){
             filter.push($(this).val());
         });
-       
+
         return filter;
     }
 

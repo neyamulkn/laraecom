@@ -61,8 +61,17 @@
         </div>
     </div>
 </div>
+<div class="col-md-12 ">
+    
+    <div class="checkbox2">
+        <input @if($data->display_type) checked @endif type="checkbox" id="editdisplayIn" name="displayInrrrr" value="1">
+        <label for="editdisplayIn">Allow display in product details.</label>
+    </div>      
 
-<div class="col-md-12" >
+</div>
+
+<div class="col-md-12" id="editdisplayInDetailsPage" @if(!$data->display_type) style="display: none;" @endif >
+
     <span>Select display type</span>
     <div class="row form-group">
         
@@ -98,3 +107,9 @@
     </div>
 </div>
 
+<script type="text/javascript">
+        $("#editdisplayIn").change(function() {
+        if(this.checked) { $("#editdisplayInDetailsPage").show(); }
+        else { $("#editdisplayInDetailsPage").hide(); }
+    });
+</script>

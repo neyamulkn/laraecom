@@ -11,7 +11,7 @@
                 <h4><a href="{{ route('product_details', $item['slug']) }}" class="product-link">{{Str::limit($item['title'], 22)}}</a></h4>
                 <span>${{$item['price']}}</span>
                 <div class="shopping-cart-delete">
-                    <a type="button" onclick="cartRemove({{$item['product_id']}})"><i class="ion-android-cancel"></i></a>
+                    <a type="button" data-target="#delete" data-toggle="modal" onclick='cartDelete("{{route("cart.itemRemove", $item["product_id"])}}")'><i class="ion-android-cancel"></i></a>
                 </div>
             </div>
         </li>

@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ProductCollection;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductFeature;
 use App\Models\Services;
 use App\Models\Slider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\Console\Input\Input;
 
 class HomeController extends Controller
 {
-
 
     public function index()
     {
@@ -30,6 +32,8 @@ class HomeController extends Controller
 
     public function category(Request $request)
     {
+
+        $data['products'] = $data['specifications'] = $data['category'] = $data['filterCategories'] = $data['brands'] = [];
 
         $products = new Product();
         $specifications = ProductAttribute::orderBy('id', 'asc');
@@ -106,11 +110,13 @@ class HomeController extends Controller
                 }
             }
 
-            $data['products'] = $products->paginate(10);
+            $data['products'] = $products->paginate(1);
             if($request->filter){
                 return view('frontend.products.filter_products')->with($data);
             }else{
-                $data['brands'] = Brand::where('category_id', $data['category']->id)->where('status', 1)->get();
+                if($data['category']){
+                    $data['brands'] = Brand::where('category_id', $data['category']->id)->where('status', 1)->get();
+                }
                 return view('frontend.products.category')->with($data);
             }
     }
@@ -240,9 +246,7 @@ class HomeController extends Controller
             $products = $products->where('title', 'like', '%' . $request->q . '%');
         }
 
-
         $products = $products->paginate(1);
-
 
         return new ProductCollection($products);
     }
@@ -271,7 +275,65 @@ class HomeController extends Controller
     }
     public function cart()
     {
-        return view('frontend.carts.cart');
+        $cartItems = Session::get('cart');
+        return view('frontend.carts.cart')->with(compact('cartItems'));
+    }
+
+    public function couponApply(Request $request){
+        $coupon = Coupon::where('coupon_code', $request->coupon_code)->first();
+        if(!$coupon){
+            return response()->json(['status' => 'error', 'msg' => 'This coupon does not exists.']);
+        }else{
+
+            if($coupon->status == 0)
+            {
+                return response()->json(['status' => 'error', 'msg' => 'This coupon is not active.']);
+            }
+
+            if($coupon->times != null)
+            {
+                if($coupon->times == "0")
+                {
+                    return response()->json(['status' => 'error', 'msg' => 'Coupon usage limit has been reached.']);
+                }
+            }
+
+            $today = Carbon::parse(now())->format('d-m-Y');
+            $from = Carbon::parse($coupon->start_date)->format('d-m-Y');
+            $to = Carbon::parse($coupon->expired_date)->format('d-m-Y');
+
+            if( $from > $today)
+            {
+                return response()->json(['status' => 'error', 'msg' => 'This coupon is running from: '.$from]);
+            }if( $to < $today )
+            {
+                return response()->json(['status' => 'error', 'msg' => 'This coupon is expired.']);
+            }
+
+            $cart = Session::get('cart');
+            $total_amount = 0;
+            foreach($cart as $item) {
+                $total_amount += round($item['price'] * $item['qty'], 2);
+            }
+            if($coupon->type == 0)
+            {
+                $couponAmount = $total_amount * ($coupon->amount/100);
+            }else{
+                $couponAmount = $coupon->amount;
+            }
+
+            if(Session::get('couponCode') == $request->coupon_code){
+                return response()->json(['status' => 'error', 'msg' => 'This coupon is allready used.']);
+            }
+
+            Session::put('couponCode', $request->coupon_code);
+            Session::put('couponAmount', $couponAmount);
+            $cartItems = Session::get('cart');
+            $output =  view('frontend.carts.cart_summary')->with(compact('cartItems'));
+
+            return $output ;
+
+        }
     }
 
     public function checkout()

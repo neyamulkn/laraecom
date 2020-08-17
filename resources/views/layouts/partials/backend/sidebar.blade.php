@@ -130,7 +130,7 @@
                         <li><a href="#">Compose Mail</a></li>
                     </ul>
                 </li>
-
+             
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-palette"></i><span class="hide-menu">Expenditure</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="#">Mailbox</a></li>
@@ -167,6 +167,8 @@
                         <li><a href="#">Compose Mail</a></li>
                     </ul>
                 </li>
+
+                <li> <a class="waves-effect waves-dark" href="{{route('coupon')}}" aria-expanded="false"><i class="fa fa-people-carry"></i><span class="hide-menu">Manage Coupon</span></a></li>
 
                 <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-people-carry"></i><span class="hide-menu">Subscriptions</span></a></li>
                 

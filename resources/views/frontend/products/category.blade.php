@@ -59,10 +59,24 @@
                                                 <a style="font-weight: bold;" href="#">{{$category->name}}</a>
                                             </div>
                                         </li>
+                                       
                                         @foreach($filterCategories as $filterCategory )
+                                        <?php 
+                                        $category = $subcategory = $childcategory = '';
+                                        if(Request::route('catslug')){
+                                            $category = Request::route('catslug');
+                                            $subcategory = $filterCategory->slug;
+                                        }
+                                        if(Request::route('subslug')){
+                                            $category = Request::route('catslug');
+                                            $subcategory = Request::route('subslug');
+                                            $childcategory = $filterCategory->slug;
+                                        }
+                                        ?>
+
                                         <li>
                                             <div class="sidebar-widget-list-left">
-                                                <a href="#">{{$filterCategory->name}}</a>
+                                                <a href="{{route('home.category', [$category, $subcategory, $childcategory])}}">{{$filterCategory->name}}</a>
                                                 
                                             </div>
                                         </li>
@@ -158,10 +172,10 @@
         -----------*/
         $('.price-range-slider').jRange({
             from: 0,
-            to: 1000,
+            to: {{ ( count($products)>0) ? intval(max(array_column($products->toArray()['data'], 'selling_price'))) : 1000}},
             step: 1,
             format: '$%s',
-            width: 200,
+            width: 190,
             showLabels: true,
             showScale: false,
             isRange : true,

@@ -106,7 +106,7 @@
                         <h4 class="modal-title">Create Product Attribute</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <form action="{{route('productAttribute.store')}}" enctype="multipart/form-data" method="POST" class="floating-labels">
+                    <form action="{{route('productAttribute.store')}}" enctype="multipart/form-data" method="POST">
                         {{csrf_field()}}
                         <div class="modal-body form-row">
 
@@ -188,35 +188,39 @@
                                         <div class="row">
 
                                             <div class="col-md-12 ">
-                                            <span>Select display type</span></div>
-                                            <div class="col-md-3" style="padding-left: 30px;">
+                                                <div class="form-group">
+                                                    <div class="checkbox2">
+                                                        <input type="checkbox" id="displayIn" name="displayIn" value="add">
+                                                        <label for="displayIn">Allow display in product details.</label>
+                                                    </div>      
+                                                </div> 
+                                            </div>
+                                           
+                                            <div class="col-md-12" id="displayInDetailsPage" style="display: none;">
+                                                <span>Select display type</span>
+                                                <div class="row form-group">
+                                                    <div class="custom-control custom-radio">
+                                                        <input value="1" type="radio" id="flat" class="custom-control-input">
+                                                        <label class="custom-control-label" for="flat">Flat</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input value="2" type="radio" id="elect" class="custom-control-input">
+                                                        <label class="custom-control-label" for="elect">Select</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input value="3" type="radio" id="radio" name="display_type" class="custom-control-input">
+                                                        <label class="custom-control-label" for="radio">Radio</label>
+                                                    </div>
 
-                                                <div class="custom-control custom-radio">
-                                                    <input checked value="1" type="radio" id="flat" name="display_type" class="custom-control-input">
-                                                    <label class="custom-control-label" for="flat">Flat</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 ">
-                                                <div class="custom-control custom-radio">
-                                                    <input value="2" type="radio" id="select" name="display_type" class="custom-control-input">
-                                                    <label class="custom-control-label" for="select">Select</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 ">
-                                                <div class="custom-control custom-radio">
-                                                    <input value="3" type="radio" id="radio" name="display_type" class="custom-control-input">
-                                                    <label class="custom-control-label" for="radio">Radio</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 ">
-                                                <div class="custom-control custom-radio">
-                                                    <input value="4" type="radio" id="dropdown" name="display_type" class="custom-control-input">
-                                                    <label class="custom-control-label" for="dropdown">Dropdown</label>
+                                                    <div class="custom-control custom-radio">
+                                                        <input value="4" type="radio" id="dropdown" name="display_type" class="custom-control-input">
+                                                        <label class="custom-control-label" for="dropdown">Dropdown</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row justify-content-md-center">
-                                            <div class="col-md-12"><br/>
+                                            <div class="col-md-12">
                                                <span class="switch-box">Status</span>
                                                 <div class="head-label">
 
@@ -406,10 +410,12 @@
 
         });
     }
-// if occur error open model
-    @if($errors->any())
-        $("#{{Session::get('submitType')}}").modal('show');
-    @endif
+    $("#displayIn").change(function() {
+        if(this.checked) { $("#displayInDetailsPage").show(); }
+        else { $("#displayInDetailsPage").hide(); }
+    });
+
+
 </script>
 
 

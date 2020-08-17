@@ -35,9 +35,8 @@
 
 <!-- Shop Bottom Area Start -->
 <div class="shop-bottom-area mt-35">
-    @if($products)
+    @if(count($products)>0)
     <div class="row">
-
         @foreach($products as $product)
         <div style="padding-right: 0px;" class="col-xl-3 col-md-6 col-lg-4 col-sm-6 col-xs-6">
             @include('frontend.products.products')

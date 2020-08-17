@@ -5,7 +5,22 @@
         .cart-table-content table thead>tr th{padding: 8px;}
         .cart-table-content table tbody>tr td{padding: 10px 5px;}
         .cart-table-content table tbody>tr td.product-quantity{width: inherit;}
-       
+       .qtybutton{display: none;}
+       .qtybtn{display: block !important;}
+       .discount-code input {
+            width: 195px;
+            height: 37px;
+            margin: 0px;
+
+            padding: 0px 10px;
+            font-size: 14px;
+        }
+        .discount-code{
+            padding: 5px 0; 
+            margin: 5px 0; 
+            border-bottom: 1px solid #ebebeb;
+            border-top: 1px solid #ebebeb;
+        }
     </style>
 @endsection
 @section('content')
@@ -24,263 +39,77 @@
         </div>
     </section>
     <!-- cart area start -->
-    <div class="cart-main-area mtb-60px">
-        <div class="container">
+    <div class=" cart-main-area mtb-20px">
+        <div class="container" >
+       
             <h3 class="cart-page-title">Your cart items</h3>
-
-    
-            <div class="row">
-                
-                <div class="col-lg-8 col-md-8 col-sm-12 col-12">
-                    <form action="#">
-                        <div class="table-content table-responsive cart-table-content">
-
-                       
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Title</th>
-                                        <th>Price</th>
-                                        <th>Qty</th>
-                                        <th>Subtotal</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @if(Session::get('cart'))
-                                    @foreach(Session::get('cart') as $item)
-                                    <tr>
-                                        <td >
-
-                                            <a href="#"><img src="{{asset('frontend')}}/images/product-image/mini-cart/1.jpg" alt="" /></a>
-
-                                            
-
-
-                                        </td>
-                                        <td style="text-align: left;"><a href="#">Huawei Mediapad T3 8inch Tablet 2 GB RAM/16GB ROM</a>
-                                        </td>
-                                        <td ><span class="amount">$60.00</span></td>
-                                        <td class="product-quantity">
-                                            <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                                            </div>
-                                        </td>
-                                        <td >$70.00</td>
-                                        <td class="product-remove">
-                                            
-                                            <a href="#"><i class="fa fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="cart-shiping-update-wrapper">
-                                    <div class="cart-shiping-update">
-                                        <a href="#">Continue Shopping</a>
-                                    </div>
-                                    <div class="cart-clear">
-                                        <button>Update Shopping Cart</button>
-                                        <a href="#">Clear Shopping Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="cart-tax">
-                                <div class="title-wrap">
-                                    <h4 class="cart-bottom-title section-bg-gray">Estimate Shipping And Tax</h4>
-                                </div>
-                                <div class="tax-wrapper">
-                                    <p>Enter your destination to get a shipping estimate.</p>
-                                    <div class="tax-select-wrapper">
-                                        <div class="tax-select">
-                                            <label>
-                                                * Country
-                                            </label>
-                                            <select class="email s-email s-wid">
-                                                <option>Bangladesh</option>
-                                                <option>Albania</option>
-                                                <option>Åland Islands</option>
-                                                <option>Afghanistan</option>
-                                                <option>Belgium</option>
-                                            </select>
-                                        </div>
-                                        <div class="tax-select">
-                                            <label>
-                                                * Region / State
-                                            </label>
-                                            <select class="email s-email s-wid">
-                                                <option>Bangladesh</option>
-                                                <option>Albania</option>
-                                                <option>Åland Islands</option>
-                                                <option>Afghanistan</option>
-                                                <option>Belgium</option>
-                                            </select>
-                                        </div>
-                                        <div class="tax-select mb-25px">
-                                            <label>
-                                                * Zip/Postal Code
-                                            </label>
-                                            <input type="text" />
-                                        </div>
-                                        <button class="cart-btn-2" type="submit">Get A Quote</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="discount-code-wrapper">
-                                <div class="title-wrap">
-                                    <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4>
-                                </div>
-                                <div class="discount-code">
-                                    <p>Enter your coupon code if you have one.</p>
-                                    <form>
-                                        <input type="text" required="" name="name" />
-                                        <button class="cart-btn-2" type="submit">Apply Coupon</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12">
-                            <div class="grand-totall">
-                                <div class="title-wrap">
-                                    <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
-                                </div>
-                                <h5>Total products <span>$260.00</span></h5>
-                                <div class="total-shipping">
-                                    <h5>Total shipping</h5>
-                                    <ul>
-                                        <li><input type="checkbox" /> Standard <span>$20.00</span></li>
-                                        <li><input type="checkbox" /> Express <span>$30.00</span></li>
-                                    </ul>
-                                </div>
-                                <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
-                                <a href="#">Proceed to Checkout</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-lg-4">
-                    <div class="your-order-area">
-                       
-                        <div class="your-order-wrap gray-bg-4">
-                            <div class="your-order-product-info">
-                                <div class="your-order-top">
-                                    <ul>
-                                        <li>Product</li>
-                                        <li>Total</li>
-                                    </ul>
-                                </div>
-                                <div class="your-order-middle">
-                                    <ul>
-                                        <li><span class="order-middle-left">Product Name X 1</span> <span class="order-price">$329 </span></li>
-                                        <li><span class="order-middle-left">Product Name X 1</span> <span class="order-price">$329 </span></li>
-                                    </ul>
-                                </div>
-                                <div class="your-order-bottom">
-                                    <ul>
-                                        <li class="your-order-shipping">Shipping</li>
-                                        <li>Free shipping</li>
-                                    </ul>
-                                </div>
-                                <div class="your-order-total">
-                                    <ul>
-                                        <li class="order-total">Total</li>
-                                        <li>$329</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="payment-method">
-                                <div class="payment-accordion element-mrg">
-                                    <div class="panel-group" id="accordion">
-                                        <div class="panel payment-accordion">
-                                            <div class="panel-heading" id="method-one">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion" href="#method1">
-                                                        Direct bank transfer
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="method1" class="panel-collapse collapse show">
-                                                <div class="panel-body">
-                                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel payment-accordion">
-                                            <div class="panel-heading" id="method-two">
-                                                <h4 class="panel-title">
-                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#method2">
-                                                        Check payments
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="method2" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel payment-accordion">
-                                            <div class="panel-heading" id="method-three">
-                                                <h4 class="panel-title">
-                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#method3">
-                                                        Cash on delivery
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="method3" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Place-order mt-25">
-                            <a class="btn-hover" href="#">Place Order</a>
-                        </div>
-                    </div>
-                </div>
+            <div id="pageLoading"></div>
+            <div id="cart_summary">
+                @include('frontend.carts.cart_summary')
             </div>
         </div>
     </div>
     <!-- cart area end -->
+
 @endsection
 
 @section('js')
-    
-    <script type="text/javascript">
-        var image = "{{asset('frontend')}}/images/product-image/mini-cart/1.jpg";
-        var watermark = "{{asset('frontend')}}/images/product-image/mini-cart/2.jpg";
+
+<script type="text/javascript">
+    function cartUpdate(id){
+        document.getElementById('pageLoading').style.display = 'block';
+        var qty = $('#qtyTotal'+id).val();
+        if(parseInt(qty) && qty>0){
+            $.ajax({
+                url:"{{route('cart.update')}}",
+                method:"get",
+                data:{ id:id,qty:qty },
+                success:function(data){
+                    if(data.status == 'error'){
+                        toastr.error(data.msg);
+                    }else{
+                        $('#cart_summary').html(data);
+                        toastr.success('Quantity Update Successful');
+                    }
+                    document.getElementById('pageLoading').style.display = 'none';
+                },
+                error: function(jqXHR, exception) {
+                    toastr.error('Internal server error.');
+                    document.getElementById('pageLoading').style.display = 'none';
+                }
+            });
+        }else{
+            toastr.error('Invalid Number.');
+            document.getElementById('pageLoading').style.display = 'none';
+        }
+    }    
+
+   $("#couponForm").submit(function(e) {
+        e.preventDefault(); 
+        var coupon_code = $('#couponCode').val();
+       
+        document.getElementById('pageLoading').style.display = 'block';
         $.ajax({
-            url:"{{route('product.water')}}",
+            url:"{{route('coupon.apply')}}",
             method:"get",
-            data:{
-                watermark:watermark,image:image
-            },
+            data:{ coupon_code:coupon_code },
             success:function(data){
-                if(data){
-                    $('.watermark').html(data);
-               }else{
-                    $('.watermark').html('Not Found');
-               }
+                document.getElementById('pageLoading').style.display = 'none';
+                if(data.status == 'error'){
+                    $('#grandTotal').html(data.total);
+                    toastr.error(data.msg);
+                }else{
+                    $('#cart_summary').html(data);
+                    toastr.success('Coupon code successfully applied. You are available discount..');
+                }
+               
             },
-            
+            error: function(jqXHR, exception) {
+                toastr.error('Internal server error.');
+                document.getElementById('pageLoading').style.display = 'none';
+            }
         });
-    </script>
+    });
+</script>
 
 @endsection
